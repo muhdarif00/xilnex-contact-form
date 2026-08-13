@@ -57,16 +57,7 @@ button{cursor:pointer}
     radial-gradient(circle at 18% 86%,rgba(66,20,62,.85),transparent 36%),
     linear-gradient(145deg,#64235f 0%,#8e337f 46%,#ca61bd 100%);
 }
-.visual-side:before{
-  content:"";
-  position:absolute;inset:0;opacity:.16;
-  background-image:
-    linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);
-  background-size:34px 34px;
-  transform:perspective(520px) rotateX(58deg) scale(1.5);
-  transform-origin:center bottom;
-}
+.visual-side:before{content:none !important;}
 .visual-side:after{
   content:"";
   position:absolute;
@@ -394,29 +385,45 @@ select{appearance:none}
 
 
 <style>
-/* ===== Larger, endless perspective grid on right panel ===== */
+</style>
+
+
+<style>
+/* ===== FIXED ENDLESS PERSPECTIVE GRID ===== */
 .visual-side{
-  overflow:hidden;
+  position:relative !important;
+  overflow:hidden !important;
 }
-.visual-side:before{
-  inset:auto -35% -18% -35% !important;
-  width:170% !important;
-  height:72% !important;
-  opacity:.23 !important;
-  background-image:
-    linear-gradient(rgba(255,255,255,.62) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.62) 1px,transparent 1px) !important;
-  background-size:42px 42px !important;
-  transform:perspective(420px) rotateX(62deg) scale(1.45) !important;
-  transform-origin:center bottom !important;
-  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.45) 15%,#000 55%,#000 100%) !important;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.45) 15%,#000 55%,#000 100%) !important;
-}
-.visual-side:after{
+.visual-grid-layer{
+  position:absolute;
+  left:-55%;
+  right:-55%;
+  bottom:-10%;
+  height:72%;
   z-index:1;
+  pointer-events:none;
+  opacity:.34;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.72) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.72) 1px, transparent 1px);
+  background-size:48px 48px;
+  transform:perspective(480px) rotateX(62deg);
+  transform-origin:center bottom;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 18%, #000 48%, #000 100%);
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 18%, #000 48%, #000 100%);
 }
-.visual-content{
-  z-index:3;
+.visual-grid-layer:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(92,26,86,.05), rgba(92,26,86,.45));
+}
+.visual-side .visual-content{
+  position:absolute;
+  z-index:4;
+}
+.visual-side .visual-orb{
+  z-index:2;
 }
 </style>
 
@@ -565,6 +572,7 @@ select{appearance:none}
   </section>
 
   <aside class="visual-side">
+    <div class="visual-grid-layer"></div>
     <div class="visual-content">
       <div class="visual-label"><span class="dot"></span> Xilnex · Business enquiries</div>
       <h2>Let’s find the <span>right solution</span> for your business.</h2>
