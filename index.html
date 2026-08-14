@@ -2376,7 +2376,7 @@ body.support-contact-active .support-phone-list {
               <div>
                 <div class="support-contact-label">Support Help Center</div>
                 <div class="support-contact-value">
-                  <a href="https://zoho.com/desk" target="_blank" rel="noopener">Visit Zoho Desk ↗</a>
+                  <a href="https://support.xilnex.com/portal/en/home" target="_blank" rel="noopener">Visit Xilnex Support Help Center ↗</a>
                 </div>
               </div>
             </div>
@@ -2397,7 +2397,12 @@ body.support-contact-active .support-phone-list {
   }
 
   function renderInquiryType(){
-    document.querySelector('.app').classList.remove('welcome-mode');
+    document.querySelector('.app').classList.remove(
+      'welcome-mode',
+      'sales-compact-mode',
+      'partnership-compact-mode'
+    );
+    document.body.classList.remove('support-contact-active');
     card.classList.remove('welcome-card');
     card.classList.add('compact-step');
     const types = [
