@@ -1038,7 +1038,7 @@
 <div class="progress-wrap" id="progressWrap">
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     <div class="progress-label">
-      <span id="progressText">Step 1 of 4</span>
+      <span id="progressText">Step 1 of 3</span>
       <span id="progressPct">25%</span>
     </div>
   </div>
@@ -1091,20 +1091,23 @@
     const fill = document.querySelector('.progress-fill');
     const label = document.querySelector('.progress-label');
 
-    if(step === 0 || step === 3){
+    // The welcome screen is outside the 3-step enquiry flow.
+    // Support Contact is a final support route, so it is presented as Step 3 of 3.
+    if(step === 0){
       if(progressWrap) progressWrap.style.visibility = 'hidden';
       return;
     }
 
     if(progressWrap) progressWrap.style.visibility = 'visible';
 
-    const pct = step === 0 ? 33 : step === 1 ? 66 : 100;
+    const displayStep = step === 1 ? 1 : step === 2 ? 2 : 3;
+    const pct = displayStep === 1 ? 33 : displayStep === 2 ? 66 : 100;
     if(fill) fill.style.width = pct + '%';
 
     if(label){
       const left = label.querySelector('span:first-child');
       const right = label.querySelector('span:last-child');
-      if(left) left.textContent = `Step ${step+1} of 3`;
+      if(left) left.textContent = `Step ${displayStep} of 3`;
       if(right) right.textContent = `${pct}%`;
     }
   }
