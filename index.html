@@ -2145,7 +2145,7 @@ body.support-contact-active .support-phone-list {
     inquiryType:null, // 'sales' | 'partnership' | 'support'
     storeSize:null, industry:null, painPoints:[],
     partnerCategory:null,
-    supportProducts:[], comId:'', zohoTicket:'',
+    supportProducts:[], comId:'',
     generalSubject:'',
     message:''
   };
@@ -2415,7 +2415,7 @@ body.support-contact-active .support-phone-list {
         <path d="m14.8 9.2 1.4-1.4a3.1 3.1 0 0 1 4.4 4.4l-2.5 2.5a3.1 3.1 0 0 1-4.4 0l-1-1"/>
         <path d="m8.5 15.5 7-7"/>
       </svg>`, title:'Media/Partnership Inquiry', desc:'Media, partnership, or collaboration request'},
-      {id:'general', icon:`<svg viewBox="0 0 24 24" aria-hidden="true">
+      {id:'support', icon:`<svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v7A2.5 2.5 0 0 1 17.5 15H11l-4.5 4v-4H6.5A2.5 2.5 0 0 1 4 12.5z"/>
         <path d="M8 8h8M8 11h5"/>
       </svg>`, title:'Contact Support', desc:'Get help with Xilnex support.'}];
@@ -2473,8 +2473,9 @@ body.support-contact-active .support-phone-list {
         return;
       }
 
-      // Route to the appropriate page only after Continue is clicked.
-      if(state.inquiryType === 'general'){
+      // Support keeps the original standalone support page design.
+      // Sales and Partnership continue into the normal 3-step form flow.
+      if(state.inquiryType === 'support'){
         step = 4; // Contact our Support Team
       } else {
         step = 1; // Tell us about yourself
@@ -2492,7 +2493,6 @@ body.support-contact-active .support-phone-list {
     if(state.inquiryType === 'sales') return renderBranchSales();
     if(state.inquiryType === 'partnership') return renderBranchPartnership();
     if(state.inquiryType === 'support') return renderBranchSupport();
-    if(state.inquiryType === 'general') return renderBranchGeneral();
   }
 
   function renderBranchSales(){
@@ -2723,11 +2723,6 @@ body.support-contact-active .support-phone-list {
           <label>COM ID</label>
           <input type="text" id="comId" value="${esc(state.comId)}" placeholder="Enter your Xilnex COM ID">
         </div>
-        <div class="field">
-          <label>Zoho ticket number <span style="font-weight:400;color:var(--ink-400)">(if you already have one)</span></label>
-          <input type="text" id="zohoTicket" value="${esc(state.zohoTicket)}" placeholder="Optional">
-        </div>
-
         <div class="hint-error" id="errSupport">Enter your COM ID before continuing.</div>
 
         <div class="field message-field">
@@ -2755,7 +2750,6 @@ body.support-contact-active .support-phone-list {
       });
     });
     document.getElementById('comId').addEventListener('input', e => state.comId = e.target.value);
-    document.getElementById('zohoTicket').addEventListener('input', e => state.zohoTicket = e.target.value);
     document.getElementById('backBtn').addEventListener('click', () => { step = 1; render(); });
     document.getElementById('nextBtn').addEventListener('click', () => {
       if(!state.comId){ document.getElementById('errSupport').classList.add('show'); return; }
@@ -2832,11 +2826,7 @@ body.support-contact-active .support-phone-list {
           <span class="confirmation-label">Com ID</span>
           <span class="confirmation-value">${esc(state.comId || '—')}</span>
         </div>
-        ${state.zohoTicket ? `
-        <div class="confirmation-row">
-          <span class="confirmation-label">Zoho ticket</span>
-          <span class="confirmation-value">${esc(state.zohoTicket)}</span>
-        </div>` : ''}`;
+`;
     }
 
     card.innerHTML = `
@@ -2894,7 +2884,7 @@ body.support-contact-active .support-phone-list {
       Object.assign(state, {
         firstName:'', lastName:'', mobile:'', email:'', company:'',
         inquiryType:null, storeSize:null, industry:null, painPoints:[],
-        partnerCategory:null, supportProducts:[], comId:'', zohoTicket:'', generalSubject:'', message:''
+        partnerCategory:null, supportProducts:[], comId:'', generalSubject:'', message:''
       });
       step = 0;
       render();
